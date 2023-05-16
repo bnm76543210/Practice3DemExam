@@ -95,14 +95,14 @@
                 <ComboBoxItem Content="Сортировать по возрастанию"/>
                 <ComboBoxItem Content="Сортировать по убыванию"/>
             </ComboBox>
-            <Button x:Name="AddService" Content="Добавить услугу" HorizontalAlignment="Center" VerticalAlignment="Stretch" Height="25" Width="240" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="AddService_Click" Grid.Column="1" Margin="10,0,10,0">
+            <Button x:Name="AddService" Visibility="Hidden"  Content="Добавить услугу" HorizontalAlignment="Center" VerticalAlignment="Stretch" Height="25" Width="240" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="AddService_Click" Grid.Column="1" Margin="10,0,10,0">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="NearestEntry" Content="Ближайшие записи" HorizontalAlignment="Center" Height="25" Width="240" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="NearestEntry_Click" Grid.Column="2" VerticalAlignment="Bottom">
+            <Button x:Name="NearestEntry" Visibility="Hidden" Content="Ближайшие записи" HorizontalAlignment="Center" Height="25" Width="240" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="NearestEntry_Click" Grid.Column="2" VerticalAlignment="Bottom">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>

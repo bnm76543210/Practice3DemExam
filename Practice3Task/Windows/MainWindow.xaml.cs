@@ -23,6 +23,7 @@ namespace Practice3Task
         public static List<Service> sortedList;
         public static Service service;
         public static MainWindow mainWindow;
+        public static bool isAdmin = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -77,6 +78,13 @@ namespace Practice3Task
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             AddAllFilters();
+            if (Search.Text == "0000" && isAdmin == false)
+            {
+                isAdmin = true;
+                AddService.Visibility = Visibility.Visible;
+                NearestEntry.Visibility = Visibility.Visible;
+                MessageBox.Show("Вы перешли в режим администратора");
+            }
         }
 
         /// <summary>
@@ -109,14 +117,21 @@ namespace Practice3Task
         /// <param name="e"></param>
         private void ClickAddClientToService(object sender, RoutedEventArgs e)
         {
-            Windows.RegistrationForTheService registrationForTheService = new Windows.RegistrationForTheService();
-            service = (sender as Button).DataContext as Service;
-            registrationForTheService.Show();
-            registrationForTheService.TextBlockDuration.Text = "Длительность услуги: " + service.Duration.ToString();
-            registrationForTheService.TextBlockName.Text = "Наименование услуги: " + service.Name.ToString();
-            Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
-            registrationForTheService.ComboBoxChooseClient.ItemsSource = db.Client.ToList();
-            registrationForTheService.Show();
+            if (isAdmin == true)
+            {
+                Windows.RegistrationForTheService registrationForTheService = new Windows.RegistrationForTheService();
+                service = (sender as Button).DataContext as Service;
+                registrationForTheService.Show();
+                registrationForTheService.TextBlockDuration.Text = "Длительность услуги: " + service.Duration.ToString();
+                registrationForTheService.TextBlockName.Text = "Наименование услуги: " + service.Name.ToString();
+                Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
+                registrationForTheService.ComboBoxChooseClient.ItemsSource = db.Client.ToList();
+                registrationForTheService.Show();
+            }
+            else
+            {
+                MessageBox.Show("Перейдите в режим администратора!");
+            }
         }
 
         /// <summary>
@@ -126,21 +141,28 @@ namespace Practice3Task
         /// <param name="e"></param>
         private void ClickRemove(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Вы точно желаете удалить услугу?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            if (isAdmin == true)
             {
-                Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
-                Service currentService = (sender as Button).DataContext as Service;
-                Service element = db.Service.Where(serviceFind => serviceFind.Id == currentService.Id).FirstOrDefault();
-                if (element.ClientService.Count > 0)
+                MessageBoxResult result = MessageBox.Show("Вы точно желаете удалить услугу?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Вы не можете удалить эту услугу так как на неё есть запись!");
-                    return;
+                    Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
+                    Service currentService = (sender as Button).DataContext as Service;
+                    Service element = db.Service.Where(serviceFind => serviceFind.Id == currentService.Id).FirstOrDefault();
+                    if (element.ClientService.Count > 0)
+                    {
+                        MessageBox.Show("Вы не можете удалить эту услугу так как на неё есть запись!");
+                        return;
+                    }
+                    db.Service.Remove(element);
+                    db.SaveChanges();
+                    AddAllFilters();
+                    MessageBox.Show("Услуга была успешно удалена!");
                 }
-                db.Service.Remove(element);
-                db.SaveChanges();
-                AddAllFilters();
-                MessageBox.Show("Услуга была успешно удалена!");
+            }
+            else
+            {
+                MessageBox.Show("Перейдите в режим администратора!");
             }
         }
 
@@ -151,9 +173,16 @@ namespace Practice3Task
         /// <param name="e"></param>
         private void ClickChange(object sender, RoutedEventArgs e)
         {
-            service = (sender as Button).DataContext as Service;
-            Windows.AddService addService = new Windows.AddService();
-            addService.ShowDialog();
+            if (isAdmin == true)
+            {
+                service = (sender as Button).DataContext as Service;
+                Windows.AddService addService = new Windows.AddService();
+                addService.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Перейдите в режим администратора!");
+            }
         }
 
         /// <summary>
