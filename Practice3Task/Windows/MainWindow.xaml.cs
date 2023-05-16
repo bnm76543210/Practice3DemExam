@@ -29,6 +29,9 @@ namespace Practice3Task
             FillingList();
         }
 
+        /// <summary>
+        /// Заполнение listview
+        /// </summary>
         public void FillingList()
         {
             Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
@@ -46,21 +49,41 @@ namespace Practice3Task
             mainWindow = this;
         }
 
+        /// <summary>
+        /// Событие для фильтрации в Combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FilteringComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             AddAllFilters();
         }
 
+        /// <summary>
+        /// Событие для сортировки в Combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SortingComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             AddAllFilters();
         }
 
+        /// <summary>
+        /// Событие для поиска в TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             AddAllFilters();
         }
 
+        /// <summary>
+        /// Добавление услуги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddService_Click(object sender, RoutedEventArgs e)
         {
             service = null;
@@ -68,12 +91,22 @@ namespace Practice3Task
             addService.ShowDialog();
         }
 
+        /// <summary>
+        /// Окно с записью на услуги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NearestEntry_Click(object sender, RoutedEventArgs e)
         {
             Windows.NearestEntries nearestEntries = new Windows.NearestEntries();
             nearestEntries.ShowDialog();
         }
 
+        /// <summary>
+        /// Добавление записи на услугу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickAddClientToService(object sender, RoutedEventArgs e)
         {
             Windows.RegistrationForTheService registrationForTheService = new Windows.RegistrationForTheService();
@@ -86,6 +119,11 @@ namespace Practice3Task
             registrationForTheService.Show();
         }
 
+        /// <summary>
+        /// Удаление услуги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickRemove(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Вы точно желаете удалить услугу?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -106,6 +144,11 @@ namespace Practice3Task
             }
         }
 
+        /// <summary>
+        /// Изменение услуги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickChange(object sender, RoutedEventArgs e)
         {
             service = (sender as Button).DataContext as Service;
@@ -113,6 +156,9 @@ namespace Practice3Task
             addService.ShowDialog();
         }
 
+        /// <summary>
+        /// Функция фильтрации/сортировки/поиска
+        /// </summary>
         public void AddAllFilters()
         {
             Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();

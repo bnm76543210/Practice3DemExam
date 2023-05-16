@@ -88,7 +88,6 @@
                 <DataGridTextColumn Foreground="{Binding Foreground}" Header="Время до начала услуги" Binding="{Binding timeToStart}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-
         <Button Grid.Row="3" HorizontalAlignment="Left" Margin="10" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Content="Назад" Style="{StaticResource StandartButton}" Click="ClickBack" FontSize="20">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">

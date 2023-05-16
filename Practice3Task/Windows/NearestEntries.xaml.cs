@@ -25,51 +25,61 @@ namespace Practice3Task.Windows
         public NearestEntries()
         {
             InitializeComponent();
+            InitializeDataGrid();
         }
 
-        public void RefreshListEvery30Seconds()
+        /// <summary>
+        /// Обновление раз в 30 секунд
+        /// </summary>
+        public void RefreshList()
         {
             Thread.Sleep(30000);
             InitializeDataGrid();
-            Thread td = new Thread(new ThreadStart(RefreshListEvery30Seconds));
-            td.Start();
         }
+
+        /// <summary>
+        /// Обновление DataGrid
+        /// </summary>
         public void InitializeDataGrid()
         {
             Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
             foreach (ClientService item in db.ClientService)
             {
-                DateTime appointmentDate = item.ServiceTime; // назначенная дата
-                DateTime currentDate = DateTime.Now; // текущая дата и время
+                DateTime appointmentDate = item.ServiceTime;
+                DateTime currentDate = DateTime.Now;
                 TimeSpan timeLeft = appointmentDate.Subtract(currentDate);
-                //item.timeToStart = timeLeft;
-                //if (item.timeToStart <= new TimeSpan(2, 0, 0))
-                //{
-                //    item.Foreground = Brushes.Red;
-                //}
-                //else
-                //{
-                //    item.Foreground = Brushes.Black;
-                //    // MessageBox.Show("Black");
-                //    // DataGridUpcomingEntries.Background = item.Foreground;
-                //}
+                item.timeToStart = timeLeft;
+                if (item.timeToStart <= new TimeSpan(2, 0, 0))
+                {
+                    item.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    item.Foreground = Brushes.Black;
+
+                }
             }
-            //MessageBox.Show("foreground: " + db.ClientService.ToList()[0].foreground.Color);
+
             int count = db.Service.ToList().Count;
             int countOfListSEcond = db.Client.ToList().Count;
             List<ClientService> list = new List<ClientService>();
-            //foreach (ClientService item in db.ClientService)
-            //{
-            //    if (item.timeToStart <= new TimeSpan(48, 0, 0))
-            //    {
-            //        list.Add(item);
-            //    }
-            //}
-            ListViewUpcomingEntries.ItemsSource = list;
-            Thread td = new Thread(new ThreadStart(RefreshListEvery30Seconds));
+            foreach (ClientService item in db.ClientService)
+            {
+                if (item.timeToStart <= new TimeSpan(48, 0, 0))
+                {
+                    list.Add(item);
+                }
+            }
+            Dispatcher.Invoke(new Action(() => ListViewUpcomingEntries.ItemsSource = list));
+            Thread td = new Thread(new ThreadStart(RefreshList));
             td.Start();
         }
 
+        /// <summary>
+        /// Переход на окно MainWindow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickBack(object sender, RoutedEventArgs e)
         {
             this.Close();
