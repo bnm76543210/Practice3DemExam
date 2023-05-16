@@ -5,8 +5,96 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practice3Task.Windows"
         mc:Ignorable="d"
-        Title="NearestEntries" Height="450" Width="800">
+        Title="Список услуг" Height="450" Width="800" Background="#E7FABF" Icon="pack://application:,,,/Resources/school_logo.png" MinWidth="800" MinHeight="450" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource StandartTextBlock}" Text="Ближайшие записи"></TextBlock>
+        <Image Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="10,0,0,0"></Image>
+        <ListView Grid.Row="1" Name="ListViewUpcomingEntries" FontSize="20">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Наименование">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Service.Name}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="ФИО">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock >
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                            <Binding Path="Client.Surname"></Binding>
+                                            <Binding Path="Client.Name"></Binding>
+                                            <Binding Path="Client.Patronymic"></Binding>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Email">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Client.Email}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Телефон">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Client.Phone}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Дата и время записи">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ServiceTime}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Время до начала услуги">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding Foreground}" Text="{Binding timeToStart}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <DataGrid Visibility="Hidden" Grid.Row="1" Name="DataGridUpcomingEntries" FontSize="20" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Service.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="ФИО">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                            <Binding Path="Client.Surname"></Binding>
+                            <Binding Path="Client.Name"></Binding>
+                            <Binding Path="Client.Patronymic"></Binding>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Email" Binding="{Binding Client.Email}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Client.Phone}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата и время записи" Binding="{Binding ServiceTime}"></DataGridTextColumn>
+                <DataGridTextColumn Foreground="{Binding Foreground}" Header="Время до начала услуги" Binding="{Binding timeToStart}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="3" HorizontalAlignment="Left" Margin="10" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Content="Назад" Style="{StaticResource StandartButton}" Click="ClickBack" FontSize="20">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

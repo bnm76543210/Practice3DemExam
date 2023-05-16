@@ -5,8 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practice3Task.Windows"
         mc:Ignorable="d"
-        Title="AddService" Height="450" Width="800">
+        Title="Добавление услуги" Height="550" Width="600" Background="#E7FABF" Icon="pack://application:,,,/Resources/school_logo.png" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="2"></Border>
+        <TextBlock x:Name="AddRedTextBlock" Grid.ColumnSpan="2" Style="{StaticResource StandartTextBlock}" Text="Добавление услуги"></TextBlock>
+        <TextBlock Grid.Row="1" Style="{StaticResource StandartTextBlock}" Text="Наименование"></TextBlock>
+        <TextBox Name="Name" Style="{StaticResource StandartTextBox}" Grid.Row="1" Grid.Column="1" Margin="5" VerticalContentAlignment="Center"></TextBox>
+        <TextBlock Grid.Row="2" Style="{StaticResource StandartTextBlock}" Text="Длительность"></TextBlock>
+        <TextBox Name="Duration" Style="{StaticResource StandartTextBox}" Grid.Row="2" Grid.Column="1" Margin="5" VerticalContentAlignment="Center"></TextBox>
+        <TextBlock Grid.Row="3" Style="{StaticResource StandartTextBlock}" Text="Стоимость"></TextBlock>
+        <TextBox Name="Cost" Style="{StaticResource StandartTextBox}" Grid.Row="3" Grid.Column="1" Margin="5" VerticalContentAlignment="Center"></TextBox>
+        <TextBlock Grid.Row="4" Style="{StaticResource StandartTextBlock}" Text="Скидка"></TextBlock>
+        <TextBox Name="Discount" Style="{StaticResource StandartTextBox}" Grid.Row="4" Grid.Column="1" Margin="5" VerticalContentAlignment="Center"></TextBox>
+        <Button Style="{StaticResource StandartButton}" Content="Выбор фото" Grid.Row="5"  Margin="10,10,10,10" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="ClickChoosePhoto" HorizontalAlignment="Stretch">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Image x:Name="ImageChoosedPhoto" Margin="5" Grid.Row="5" Grid.Column="1"></Image>
+        <ListView Name="additionalImages" Grid.Row="6" Grid.Column="1" Margin="5" ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                  ScrollViewer.CanContentScroll="False" SelectionChanged="additionalImages_SelectionChanged">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                            <Image Source="{Binding Image}" Width="200"></Image>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Style="{StaticResource StandartButton}" Content="Выбор доп. фото" Grid.Row="6" Grid.Column="0" Margin="10" FontWeight="Bold" Background="#04A0FF" Click="ClickAdditionalPhoto" HorizontalAlignment="Stretch">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="AddRedBtn" Style="{StaticResource StandartButton}" Content="Добавить услугу" Width="300" Grid.Row="7" Grid.ColumnSpan="2"  Margin="10,10,10,10" FontSize="20" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="ClickAddService" VerticalAlignment="Stretch">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

@@ -5,8 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practice3Task.Windows"
         mc:Ignorable="d"
-        Title="RegistrationForTheService" Height="450" Width="800">
+        Title="Запись на услугу" Height="500" Width="650" Background="#E7FABF" Icon="pack://application:,,,/Resources/school_logo.png" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource StandartTextBlock}" Text="Запись клиента на услугу"></TextBlock>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="1" Height="50" VerticalAlignment="Top">
+                <TextBlock Name="TextBlockName" Style="{StaticResource StandartTextBlock}" Text="Наименование услуги: "></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="1" Height="50" VerticalAlignment="Top">
+                <TextBlock Name="TextBlockDuration" Style="{StaticResource StandartTextBlock}" Text="Длительность услуги: "></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="1" Height="50" VerticalAlignment="Top">
+                <TextBlock Style="{StaticResource StandartTextBlock}" Text="Выберите клиента: "></TextBlock>
+                <ComboBox Margin="30,0,0,0" Width="300" Name="ComboBoxChooseClient" Text="Длительность услуги: ">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1} {2}">
+                                        <Binding Path="Surname"/>
+                                        <Binding Path="Name"/>
+                                        <Binding Path="Patronymic"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="1" Height="50" VerticalAlignment="Top">
+                <TextBlock Style="{StaticResource StandartTextBlock}" Text="Выберите дату: "></TextBlock>
+                <DatePicker Name="DatePickerDate" FontSize="22" Margin="20,0,0,0"></DatePicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="1" Height="50" VerticalAlignment="Top">
+                <TextBlock Style="{StaticResource StandartTextBlock}" Text="Время оказания услуги: "></TextBlock>
+                <TextBox Width="300" Name="TextBoxTime" FontSize="22" Margin="20,0,0,0" Style="{StaticResource StandartTextBox}"></TextBox>
+            </StackPanel>
+        </StackPanel>
+        <Button FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Grid.Row="1" Margin="0,349,0,0" Style="{StaticResource StandartButton}" Content="Записать клиента на услугу" VerticalAlignment="Top" Click="ClickAddClientToService" Height="60" Width="250">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Grid.Row="1" Margin="10,0,0,10" Style="{StaticResource StandartButton}" Content="Назад" VerticalAlignment="Bottom" Click="ClickBack" Height="30" Width="60">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

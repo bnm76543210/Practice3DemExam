@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practice3Task"
         mc:Ignorable="d"
-       Title="Услуги" Height="450" Width="800" Background="#E7FABF" MinWidth="800" MinHeight="450" WindowStartupLocation="CenterScreen">
+       Title="Услуги" Height="450" Width="800" Background="#E7FABF" Icon="pack://application:,,,/Resources/school_logo.png" MinWidth="800" MinHeight="450" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/>
@@ -40,7 +40,7 @@
                 <DataTemplate>
                     <Border BorderBrush="Black" Background="{Binding ListItemBackground}" BorderThickness="1" Grid.RowSpan="11" Grid.ColumnSpan="2">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Image}" Height="100" Width="100"></Image>
+                            <Image Source="{Binding Image}" HorizontalAlignment="Left" VerticalAlignment="Center" Height="100" Width="100" Margin="5,5,5,5"></Image>
                             <Grid Margin="10,0,0,0" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -95,14 +95,14 @@
                 <ComboBoxItem Content="Сортировать по возрастанию"/>
                 <ComboBoxItem Content="Сортировать по убыванию"/>
             </ComboBox>
-            <Button x:Name="AddService" Content="Добавить услугу" HorizontalAlignment="Center" VerticalAlignment="Stretch" Height="25" Width="240" FontSize="20" FontWeight="Bold" FontFamily="Times New Roman" Background="#04A0FF" Click="AddService_Click" Grid.Column="1" Margin="10,0,10,0">
+            <Button x:Name="AddService" Content="Добавить услугу" HorizontalAlignment="Center" VerticalAlignment="Stretch" Height="25" Width="240" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="AddService_Click" Grid.Column="1" Margin="10,0,10,0">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="NearestEntry" Content="Ближайшие записи" HorizontalAlignment="Center" Height="25" Width="240" FontSize="20" FontWeight="Bold" FontFamily="Times New Roman" Background="#04A0FF" Click="NearestEntry_Click" Grid.Column="2" Margin="10,0,10,0" VerticalAlignment="Center">
+            <Button x:Name="NearestEntry" Content="Ближайшие записи" HorizontalAlignment="Center" Height="25" Width="240" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Background="#04A0FF" Click="NearestEntry_Click" Grid.Column="2" VerticalAlignment="Bottom">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>

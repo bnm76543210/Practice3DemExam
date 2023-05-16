@@ -21,6 +21,7 @@ namespace Practice3Task
     public partial class MainWindow : Window
     {
         public static List<Service> sortedList;
+        public static Service service;
         public static MainWindow mainWindow;
         public MainWindow()
         {
@@ -31,7 +32,16 @@ namespace Practice3Task
         public void FillingList()
         {
             Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
-            myList.ItemsSource = db.Service.ToList();
+            List<Service> list = new List<Service>();
+            foreach (Service service in db.Service)
+            {
+                if (service.Image.Count(c => c == '/' || c == char.Parse(@"\")) < 2)
+                {
+                    service.Image = "pack://application:,,,/Resources/" + service.Image;
+                }
+                list.Add(service);
+            }
+            myList.ItemsSource = list.ToList();
             Quantity.Content = (myList.Items.Count) + " из " + db.Service.ToList().Count;
             mainWindow = this;
         }
@@ -53,6 +63,7 @@ namespace Practice3Task
 
         private void AddService_Click(object sender, RoutedEventArgs e)
         {
+            service = null;
             Windows.AddService addService = new Windows.AddService();
             addService.ShowDialog();
         }
@@ -65,17 +76,41 @@ namespace Practice3Task
 
         private void ClickAddClientToService(object sender, RoutedEventArgs e)
         {
-
+            Windows.RegistrationForTheService registrationForTheService = new Windows.RegistrationForTheService();
+            service = (sender as Button).DataContext as Service;
+            registrationForTheService.Show();
+            registrationForTheService.TextBlockDuration.Text = "Длительность услуги: " + service.Duration.ToString();
+            registrationForTheService.TextBlockName.Text = "Наименование услуги: " + service.Name.ToString();
+            Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
+            registrationForTheService.ComboBoxChooseClient.ItemsSource = db.Client.ToList();
+            registrationForTheService.Show();
         }
 
         private void ClickRemove(object sender, RoutedEventArgs e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Вы точно желаете удалить услугу?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Demo3PracticeTaskEntities db = new Demo3PracticeTaskEntities();
+                Service currentService = (sender as Button).DataContext as Service;
+                Service element = db.Service.Where(serviceFind => serviceFind.Id == currentService.Id).FirstOrDefault();
+                if (element.ClientService.Count > 0)
+                {
+                    MessageBox.Show("Вы не можете удалить эту услугу так как на неё есть запись!");
+                    return;
+                }
+                db.Service.Remove(element);
+                db.SaveChanges();
+                AddAllFilters();
+                MessageBox.Show("Услуга была успешно удалена!");
+            }
         }
 
         private void ClickChange(object sender, RoutedEventArgs e)
         {
-
+            service = (sender as Button).DataContext as Service;
+            Windows.AddService addService = new Windows.AddService();
+            addService.ShowDialog();
         }
 
         public void AddAllFilters()
@@ -112,7 +147,14 @@ namespace Practice3Task
             }
             if (Search.Text != "")
             {
-                sortedList = sortedList.Where(element => element.Name.Contains(Search.Text) || element.Name.Contains(Search.Text)).ToList();
+                sortedList = sortedList.Where(element => element.Name.Contains(Search.Text)).ToList();
+            }
+            foreach (Service service in sortedList)
+            {
+                if (service.Image.Count(c => c == '/' || c == char.Parse(@"\")) < 2)
+                {
+                    service.Image = "pack://application:,,,/Resources/" + service.Image;
+                }
             }
             myList.ItemsSource = sortedList;
             Quantity.Content = (myList.Items.Count) + " из " + db.Service.ToList().Count;
